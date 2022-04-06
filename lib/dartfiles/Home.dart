@@ -10,19 +10,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void getCryptoData() async{
-    print("Initiated");
-    CryptoConvert.getAllCryptoDetails();
-  }
-  @override
-  void initState() {
-    super.initState();
-    getCryptoData();
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: ListView.builder(itemBuilder : (context, index) {
+        return ListTile(
+
+        );
+      }),
     );
   }
 }
