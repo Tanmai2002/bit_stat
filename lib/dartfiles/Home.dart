@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
 import 'package:hybrid_image/hybrid_image.dart';
+import 'package:numeral/numeral.dart';
 List cryptos=[];
 List<String> favs=['Ethereum'];
 double current_val=1.0;
@@ -26,7 +27,22 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
-          Text("Title"),
+          TextField(
+            maxLines: 1,
+            onChanged: (val){
+              setState(() {
+                current_val=double.parse(val);
+              });
+            },
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+
+            decoration: InputDecoration(
+              hintText: "Value in INR",
+              border: OutlineInputBorder()
+            )
+
+          ),
           ListBuilder(),
         ],
       ),
@@ -88,8 +104,8 @@ class _ListBuilderState extends State<ListBuilder> {
                         ],
                       ),
 
-                      Text(cryptos[index].name,style: TextStyle(fontSize: 20),overflow: TextOverflow.ellipsis,),
-                      Text(cryptos[index].price.toString(),overflow: TextOverflow.ellipsis,)
+                      Text(cryptos[index].name,style: TextStyle(fontSize: 20),overflow: TextOverflow.ellipsis),
+                      Text(getValue(cryptos[index].price),overflow: TextOverflow.ellipsis,)
                     ],
                   ),
                 ) ,
@@ -98,5 +114,10 @@ class _ListBuilderState extends State<ListBuilder> {
           }),
     );
   }
+}
+
+String getValue(double d){
+  d=current_val/d;
+  return Numeral(d).format() ;
 }
 
