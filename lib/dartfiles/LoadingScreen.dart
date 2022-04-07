@@ -12,7 +12,7 @@ class _LoadingState extends State<Loading> {
   void getCryptoData() async{
     print("Initiated");
     cryptos=await CryptoConvert.getAllCryptoDetails();
-    Navigator.popAndPushNamed(context, '/Home',arguments: [cryptos]);
+    Navigator.popAndPushNamed(context, '/Home',arguments: cryptos);
 
   }
   @override

@@ -42,5 +42,6 @@ class Crypto{
     print(name);
     print(price);
     print(date);
+    print(logo_url);
   }
 }
