@@ -92,7 +92,7 @@ class _ListBuilderState extends State<ListBuilder> {
 
                 },
                 onTap: (){
-                  Navigator.pushNamed(context, '/Favs',arguments: cryptos[index]);
+                  Navigator.pushNamed(context, '/Favs',arguments: showingcryp[index]);
                 },
 
                 child:Card(
