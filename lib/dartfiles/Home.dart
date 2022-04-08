@@ -26,14 +26,15 @@ class _HomeState extends State<Home> {
     // print(cryptos);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        leading: Icon(Icons.currency_bitcoin),
+        title: Text('Bit Stat'),
         actions: [
           IconButton(onPressed: (){
             setState(() {
               isFav=!isFav;
             });
           },
-              icon: Icon(Icons.favorite))
+              icon: Icon(Icons.favorite),color: isFav?Colors.pink:Colors.white,)
         ],
       ),
       body: Column(

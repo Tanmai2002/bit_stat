@@ -1,5 +1,6 @@
 import 'package:bit_stat/dartfiles/CrytoConvert.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
 
@@ -25,8 +26,12 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-          title: Text('Loading')
+      body :Center(
+        child: LoadingAnimationWidget.twistingDots(
+          leftDotColor: Colors.blue,
+          rightDotColor: Colors.indigo,
+          size: 200,
+        ),
       ),
     );
   }

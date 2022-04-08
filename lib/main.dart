@@ -5,7 +5,7 @@ import 'package:bit_stat/dartfiles/Home.dart';
 
 void main() {
   runApp(MaterialApp(
-    initialRoute: '/Favs',
+    initialRoute: '/',
     routes: {
       '/': (context)=>Loading(),
       '/Home': (context) =>Home(),
