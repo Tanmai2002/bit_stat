@@ -9,12 +9,13 @@ static Future<List> getAllCryptoDetails() async{
   Response response=await get(Uri.parse(url));
   // print(response.body);
   List l=jsonDecode(response.body);
-  // print(l[0]);
+  print(l[0]);
   // print(l[0]['id']);
   List cryptos=[];
   for(Map m in l){
     cryptos.add(Crypto(m));
   }
+  print(cryptos[0]);
   print(cryptos.length);
 
   return cryptos;
@@ -24,7 +25,7 @@ static Future<List> getAllCryptoDetails() async{
 class Crypto{
   late String id,currency,symbol,name,logo_url;
   late bool isActive;
-  late double price,high;
+  late double price,high,price_change,price_change_pct;
   late DateTime date;
 
   Crypto(Map cryp){
@@ -37,6 +38,8 @@ class Crypto{
     price=double.parse(cryp['price']);
     high=double.parse(cryp['high']);
     date=DateTime.parse(cryp['price_timestamp']);
+    price_change=double.parse(cryp['1d']['price_change']);
+    price_change_pct=double.parse(cryp['1d']['price_change_pct']);
   }
   void display(){
     print(name);

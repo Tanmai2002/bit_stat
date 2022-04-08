@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:bit_stat/dartfiles/CrytoConvert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,6 +9,7 @@ import 'package:numeral/numeral.dart';
 List cryptos=[];
 List<String> favs=['Ethereum'];
 double current_val=1.0;
+bool isFav=false;
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -24,6 +27,14 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+        actions: [
+          IconButton(onPressed: (){
+            setState(() {
+              isFav=!isFav;
+            });
+          },
+              icon: Icon(Icons.favorite))
+        ],
       ),
       body: Column(
         children: [
@@ -60,20 +71,27 @@ class ListBuilder extends StatefulWidget {
 class _ListBuilderState extends State<ListBuilder> {
   @override
   Widget build(BuildContext context) {
+    List showingcryp=cryptos;
+    if(isFav){
+      showingcryp=cryptos.where((element) => favs.contains(element.name.toString())).toList();
+    }
     return Expanded(
       child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemCount: cryptos.length,
+          itemCount: showingcryp.length,
 
           itemBuilder : (context, index) {
             return
               InkWell(
                 onDoubleTap: (){
                   setState(() {
-                    favs.add(cryptos[index].name);
+                    favs.add(showingcryp[index].name);
                   });
 
+                },
+                onTap: (){
+                  Navigator.pushNamed(context, '/Favs',arguments: cryptos[index]);
                 },
 
                 child:Card(
@@ -86,7 +104,7 @@ class _ListBuilderState extends State<ListBuilder> {
                           Card(
                             margin: EdgeInsets.all(5.0),
                             child: FadeInImage(
-                                image: NetworkImage(cryptos[index].logo_url),
+                                image: NetworkImage(showingcryp[index].logo_url),
                                 width: 50,
                                 height: 50,
                                 placeholder: AssetImage(
@@ -95,17 +113,21 @@ class _ListBuilderState extends State<ListBuilder> {
                                     (context, error, stackTrace) {
                                   print(error=='Invalid image data');
 
-                                  return SvgPicture.network(cryptos[index].logo_url,width: 50,height: 50,);
+                                  return SvgPicture.network(showingcryp[index].logo_url,width: 50,height: 50,);
                                 }
 
                             ),
                           ),
-                          if (favs.contains(cryptos[index].name)) Icon(Icons.favorite,color: Colors.pinkAccent)
+                          if (favs.contains(showingcryp[index].name)) Icon(Icons.favorite,color: Colors.pinkAccent)
                         ],
                       ),
-
-                      Text(cryptos[index].name,style: TextStyle(fontSize: 20),overflow: TextOverflow.ellipsis),
-                      Text(getValue(cryptos[index].price),overflow: TextOverflow.ellipsis,)
+                      Column(
+                        children: [
+                          Text(showingcryp[index].name,style: TextStyle(fontSize: 20),overflow: TextOverflow.ellipsis),
+                          Text(Numeral(showingcryp[index].price_change).format(), style: TextStyle(color: showingcryp[index].price_change>0?Colors.green : Colors.red),)
+                        ],
+                      ),
+                      Text(getValue(showingcryp[index].price),overflow: TextOverflow.ellipsis,)
                     ],
                   ),
                 ) ,

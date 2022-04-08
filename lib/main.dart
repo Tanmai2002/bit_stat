@@ -5,11 +5,11 @@ import 'package:bit_stat/dartfiles/Home.dart';
 
 void main() {
   runApp(MaterialApp(
-    initialRoute: '/',
+    initialRoute: '/Favs',
     routes: {
       '/': (context)=>Loading(),
       '/Home': (context) =>Home(),
-      '/Favs': (context)=>Favs()
+      '/Favs': (context)=>Desc()
     },
   ));
 }
